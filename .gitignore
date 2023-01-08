@@ -1,52 +1,86 @@
-# Prerequisites
-*.d
+#include <stdio.h>
+#define SIZE 20
 
-# Object files
-*.o
-*.ko
-*.obj
-*.elf
+int dizi [SIZE];
 
-# Linker output
-*.ilk
-*.map
-*.exp
+int hash (int veri) {
+	return veri%SIZE;
+}
 
-# Precompiled Headers
-*.gch
-*.pch
+void ekle (int veri) {
+	int x=hash(veri);
+	int tur=0;
+	while (dizi[x]!=-1) {
+		if (dizi[x]==-1) {
+			break;
+		}
+		x++;
+		if (x==SIZE) {
+			tur++;
+			x=0;
+		}
+		if (tur>=2) {
+			printf("Tablo dolu\n");
+			return;
+		}
+	}
+	dizi[x]=veri;
+}
 
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
+void sil (int veri) {
+	int tur=0;
+	int x=hash(veri);
+	while (dizi[x]!=veri) {
+		if (dizi[x]==veri) {
+			break;
+		}
+		x++;
+		if (tur>=2) {
+			printf("%d bulunamadi\n",veri);
+			return;
+		}
+		if (x==SIZE) {
+			x=0;
+		}
+	}
+	dizi[x]=-1;
+}
+void yaz () {
+	int i;
+	for (i=0;i<SIZE;i++) {
+		printf("%d ",dizi[i]);
+	}
+	printf("\n");
+}
 
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
-
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
-
-# Debug files
-*.dSYM/
-*.su
-*.idb
-*.pdb
-
-# Kernel Module Compile Results
-*.mod*
-*.cmd
-.tmp_versions/
-modules.order
-Module.symvers
-Mkfile.old
-dkms.conf
+int main () {
+	int i;
+	
+	for (i=0;i<SIZE;i++) {
+		dizi[i]=-1;
+		printf("%d ",dizi[i]);
+	}
+	printf("\n");
+	ekle(16);
+	ekle(26);
+	ekle(10);
+	ekle(10);
+	ekle(10);
+	ekle(11);
+	ekle(99);
+	ekle(111);
+	ekle(99);
+	ekle(40);
+	ekle(52);
+	ekle(20);
+	ekle(45);
+	ekle(54);
+	ekle(55);
+	ekle(44);
+	ekle(33);
+	ekle(44);
+	ekle(32);
+	ekle(39);
+	sil(99);
+	yaz();
+}
